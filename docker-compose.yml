@@ -7,19 +7,21 @@ services:
   nginx2:
     image: nginx
     volumes:
-      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./default2.conf:/etc/nginx/conf.d/default.conf
   php1:
     build: .
     ports:
     - 80:80
     volumes:
       - './:/var/www/html'
+    command: ["php", "/var/www/html/exec.php"]
   php2:
     build: .
     ports:
     - 81:80 
     volumes:
       - './:/var/www/html'
+    command: ["php", "/var/www/html/exec.php"]
   db: 
     image: mysql:5.7
     volumes:
@@ -28,9 +30,9 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
 volumes:
   db_data: {}
