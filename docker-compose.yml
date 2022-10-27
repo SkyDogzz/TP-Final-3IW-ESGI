@@ -1,0 +1,36 @@
+version: "1.0"
+services:
+  nginx1:
+    image: nginx
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+  nginx2:
+    image: nginx
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+  php1:
+    build: .
+    ports:
+    - 80:80
+    volumes:
+      - './:/var/www/html'
+  php2:
+    build: .
+    ports:
+    - 81:80 
+    volumes:
+      - './:/var/www/html'
+  db: 
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+volumes:
+  db_data: {}
